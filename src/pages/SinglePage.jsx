@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 
 
 function SinglePage() {
-    const { id } = useParams()
 
+    const { id } = useParams()
+    const navigate = useNavigate()
     const [blog, setBlog] = useState({})
 
     const fetchSingleBlog = async () => {
@@ -17,6 +18,18 @@ function SinglePage() {
     useEffect(() => {
         fetchSingleBlog()
     }, [])
+
+    const deleteBlog = async () => {
+        const response = await axios.delete("http://localhost:3000/blog/" + id)
+        console.log(response.status)
+        if (response.status === 200) {
+            alert("Blog deleted successfully")
+            navigate("/")
+        } else {
+            alert("somthing went wrong.")
+        }
+
+    }
     return (
         <>
             <Navbar />
@@ -32,7 +45,7 @@ function SinglePage() {
                                     <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Edit me</button>
                                 </div>
                                 <div className="w-1/2 px-2">
-                                    <button className="w-full bg-gray-200 dark:bg-red-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Delete</button>
+                                    <button onClick={deleteBlog} className="w-full bg-gray-200 dark:bg-red-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +61,7 @@ function SinglePage() {
                     </div>
                 </div>
             </div>
-
+            <Navbar />
         </>
     )
 }

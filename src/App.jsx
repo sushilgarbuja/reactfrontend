@@ -7,6 +7,7 @@ import Contact from './pages/Contact'
 import Pricing from './pages/Pricing'
 import Services from './pages/Services'
 import SinglePage from './pages/SinglePage'
+import CreateBlog from './pages/CreateBlog'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/create" element={<CreateBlog />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/pricing" element={<Pricing />} />

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import Footer from "../components/Footer";
+import HeroSection from "../components/HeroSection";
 function Home() {
     //second ma yo code lekhne
     //ani cors error aauxa teslai fixed garna lai cors package install gareko xa backend ma
@@ -22,15 +24,20 @@ function Home() {
     return (
         <>
             <Navbar />
+            <HeroSection />
             <div className="flex flex-wrap">
                 {
                     blogs.map(function (blog) {
                         return (
+
                             <Card blog={blog} key={blog.id} />
+
+
                         )
                     })
                 }
             </div>
+            <Footer />
         </>
     )
 }
