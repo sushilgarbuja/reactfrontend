@@ -1,3 +1,4 @@
+import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 
 
@@ -164,7 +165,7 @@ function Pricing() {
                     </div>
                 </div>
             </div>
-            <Navbar />
+            <Footer />
         </>
     )
 }

@@ -25,7 +25,7 @@ function Home() {
         <>
             <Navbar />
             <HeroSection />
-            <div className="flex flex-wrap">
+            <div className="blog-container flex flex-wrap mt-7">
                 {
                     blogs.map(function (blog) {
                         return (

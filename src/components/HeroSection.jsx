@@ -7,7 +7,7 @@ function HeroSection() {
                 <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <h1 className="text-4xl text-white font-bold">Hello, World!</h1>
-                    <p className="text-xl text-white mt-4">This is a sample text</p>
+                    <p className="text-xl text-white mt-4">Welcome To My Blog</p>
                 </div>
             </div>
         </>

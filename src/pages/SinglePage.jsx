@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
+import Footer from "../components/Footer"
 
 
 function SinglePage() {
@@ -64,7 +65,7 @@ function SinglePage() {
                     </div>
                 </div>
             </div>
-            <Navbar />
+            <Footer />
         </>
     )
 }

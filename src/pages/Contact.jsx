@@ -6,7 +6,7 @@ function Contact() {
     return (
         <>
             <Navbar />
-            <section className="text-gray-600 body-font bg-yellow-100">
+            <section className="text-gray-600 body-font bg-gray-100">
                 <div className="container flex flex-col md:flex-row lg:max-w-5xl w-full px-5 py-12 md:py-24 mx-auto section"
                     id="contact-form">
                     <div className="md:w-1/3 w-full">
