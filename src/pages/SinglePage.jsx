@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 
 
@@ -8,6 +8,7 @@ function SinglePage() {
 
     const { id } = useParams()
     const navigate = useNavigate()
+
     const [blog, setBlog] = useState({})
 
     const fetchSingleBlog = async () => {
@@ -38,11 +39,13 @@ function SinglePage() {
                     <div className="flex flex-col md:flex-row -mx-4">
                         <div className="md:flex-1 px-4">
                             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                                <img className="w-full h-full object-cover" src={'http://localhost:3000/' + blog?.image} alt="Product Image" />
+                                <img className="w-full h-full object-cover" src={blog?.image} alt="Product Image" />
                             </div>
                             <div className="flex -mx-2 mb-4">
                                 <div className="w-1/2 px-2">
-                                    <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Edit me</button>
+                                    <Link to={`/edit/${blog._id}`}>
+                                        <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Edit me</button>
+                                    </Link>
                                 </div>
                                 <div className="w-1/2 px-2">
                                     <button onClick={deleteBlog} className="w-full bg-gray-200 dark:bg-red-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Delete</button>

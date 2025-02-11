@@ -7,7 +7,7 @@ function Card(props) {
             <Link to={`/blog/${props.blog._id}`}>
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <Link to={`/blog/${props.blog._id}`}>
-                        <img className="rounded-t-lg" src={'http://localhost:3000/' + props.blog.image} alt="" />
+                        <img className="rounded-t-lg" src={props.blog.image} alt="" />
                     </Link>
                     <div className="p-5">
                         <Link Link to={`/blog/${props.blog._id}`}>

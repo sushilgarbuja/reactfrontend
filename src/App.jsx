@@ -8,6 +8,7 @@ import Pricing from './pages/Pricing'
 import Services from './pages/Services'
 import SinglePage from './pages/SinglePage'
 import CreateBlog from './pages/CreateBlog'
+import EditBlog from './pages/EditBlog'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<CreateBlog />} />
+          <Route path="/edit/:id" element={<EditBlog />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/pricing" element={<Pricing />} />
