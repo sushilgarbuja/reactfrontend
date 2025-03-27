@@ -10,7 +10,7 @@ function About() {
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
                         <div className="max-w-lg">
                             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">About Us</h2>
-                            <p className="mt-4 text-gray-600 text-lg">Welcome to Sushil Blog, a platform where I share insights, knowledge, and updates on technology, web development, programming, and more. Whether you're a beginner or an experienced developer, you'll find valuable content to enhance your skills.
+                            <p className="mt-4 text-gray-600 text-lg">Welcome to Sushil Blog, a platform where I share insights, knowledge, and updates on technology, web development, programming, and more. Whether you are a beginner or an experienced developer, you will find valuable content to enhance your skills.
 
                                 I aim to simplify complex topics and provide practical tips to help you grow in the tech field. Stay tuned for tutorials, project ideas, and the latest industry trends.
 

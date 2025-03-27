@@ -4,41 +4,39 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
+
 function Home() {
-    //second ma yo code lekhne
-    //ani cors error aauxa teslai fixed garna lai cors package install gareko xa backend ma
-    const [blogs, setBlogs] = useState([]) //suru ma khali array pass gareko
+    const [blogs, setBlogs] = useState([]);
+
     const fetchBlogs = async () => {
-        const response = await axios.get('http://localhost:3000/blog')
-        console.log(response.data.data) //yo code le console ma data haru dekhauxa aba frontend ma display garne useState ko kam ho
-        setBlogs(response.data.data) //setBlogs le blogs ma data save garxa
+        const response = await axios.get('http://localhost:3000/blog');
+        console.log(response.data.data);
+        setBlogs(response.data.data);
     }
 
-    //first ma talako code lekhne
-    //axios ko use garna lai npm i axios garne
     useEffect(() => {
-        fetchBlogs()
-    }, [])
+        fetchBlogs();
+    }, []);
 
-    console.log(blogs)
+    console.log(blogs);
     return (
         <>
             <Navbar />
             <HeroSection />
-            <div className="blog-container flex flex-wrap mt-7">
-                {
-                    blogs.map(function (blog) {
-                        return (
-
-                            <Card blog={blog} key={blog.id} />
-
-
-                        )
-                    })
-                }
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                    {
+                        blogs.map(function (blog) {
+                            return (
+                                <Card blog={blog} key={blog.id} className='max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700' />
+                            )
+                        })
+                    }
+                </div>
             </div>
             <Footer />
         </>
     )
 }
+
 export default Home;
