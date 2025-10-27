@@ -26,7 +26,7 @@ function EditBlog() {
                     description: blog.description,
                     image: blog.image,
                 })
-                if (blog.image) setImagePreview(blog.image.startsWith("http") ? blog.image : `https://mern3-node-ypez.onrender.com/storage/${blog.image}`)
+                if (blog.image) setImagePreview(blog.image.startsWith("http") ? blog.image : `http://localhost:5173/storage/${blog.image}`)
             } catch (err) {
                 console.error("Error fetching blog:", err)
             }
