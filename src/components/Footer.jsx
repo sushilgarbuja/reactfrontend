@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return (
         <footer className="bg-gray-900 text-white py-12 px-4">
-            <div className="container mx-auto px-4">
+            <div className="container  max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {/* About Section */}
                     <div className="mb-8 md:mb-0">
@@ -19,24 +21,24 @@ const Footer = () => {
                         <h3 className="text-xl font-bold mb-4">Quick Links</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+                                <Link to="/" className="text-gray-400 hover:text-white transition duration-300">
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+                                <Link to="/about" className="text-gray-400 hover:text-white transition duration-300">
                                     About
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+                                <Link to="/services" className="text-gray-400 hover:text-white transition duration-300">
                                     Services
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+                                <Link to="/Contact" className="text-gray-400 hover:text-white transition duration-300">
                                     Contact
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

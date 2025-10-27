@@ -1,58 +1,107 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const toggleMenu = () => setIsOpen(!isOpen);
+    const location = useLocation();
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+    const navLinks = [
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+        { name: "Services", path: "/services" },
+        { name: "Contact", path: "/contact" },
+        { name: "Create Blog", path: "/create" },
+    ];
 
     return (
-        <>
-            <nav className="bg-yellow-500 border-gray-200 dark:bg-gray-900">
-                <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <Link to={"/"} className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SushilBlog</span>
-                    </Link>
-                    <button
-                        onClick={toggleMenu}
-                        type="button"
-                        className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        aria-controls="navbar-default"
-                        aria-expanded={isOpen}
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
+        <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black/40 to-transparent backdrop-blur-md transition-all duration-300">
+            <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+                {/* ✅ Logo */}
+                <Link to="/" className="flex items-center space-x-3">
+                    {/* <img
+                        src="https://flowbite.com/docs/images/logo.svg"
+                        className="h-8 w-8"
+                        alt="Logo"
+                    /> */}
+                    <span className="text-2xl font-semibold text-white tracking-wide">
+                        Sushil<span className="text-blue-400">Blog</span>
+                    </span>
+                </Link>
+
+                {/* ✅ Mobile Toggle */}
+                <button
+                    onClick={toggleMenu}
+                    className="md:hidden text-white p-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                    {isOpen ? (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                    </button>
-                    <div className={`w-full md:block md:w-auto ${isOpen ? "block" : "hidden"}`} id="navbar-default">
-                        <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 bg-transparent dark:bg-transparent">
-                            <li>
-                                <Link to={"/"} className="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Home</Link>
-                            </li>
-                            <li>
-                                <Link to={"/about"} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</Link>
-                            </li>
-                            <li>
-                                <Link to={"/services"} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</Link>
-                            </li>
-                            <li>
-                                <Link to={"/pricing"} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</Link>
-                            </li>
-                            <li>
-                                <Link to={"/contact"} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</Link>
-                            </li>
-                            <li>
-                                <Link to={"/create"} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Create Blog</Link>
-                            </li>
+                    ) : (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    )}
+                </button>
+
+                {/* ✅ Desktop Nav */}
+                <ul className="hidden md:flex space-x-8">
+                    {navLinks.map((link) => (
+                        <li key={link.name}>
+                            <Link
+                                to={link.path}
+                                className={`text-white text-base font-medium transition-all duration-300 hover:text-blue-400 ${location.pathname === link.path ? "text-blue-400" : ""
+                                    }`}
+                            >
+                                {link.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* ✅ Mobile Menu */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="md:hidden bg-black/90 backdrop-blur-md border-t border-white/10"
+                    >
+                        <ul className="flex flex-col items-center space-y-4 py-6">
+                            {navLinks.map((link) => (
+                                <li key={link.name}>
+                                    <Link
+                                        onClick={() => setIsOpen(false)}
+                                        to={link.path}
+                                        className={`block text-lg font-medium px-3 py-2 text-white transition hover:text-blue-400 ${location.pathname === link.path ? "text-blue-400" : ""
+                                            }`}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
-                    </div>
-                </div>
-            </nav>
-        </>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </nav>
     );
 }
 

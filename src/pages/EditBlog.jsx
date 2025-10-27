@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
 
-
 function EditBlog() {
     const { id } = useParams()
     const navigate = useNavigate()
+
     const [data, setData] = useState({
         title: "",
         subtitle: "",
@@ -17,15 +17,19 @@ function EditBlog() {
 
     useEffect(() => {
         const fetchBlog = async () => {
-            const response = await axios.get(`http://localhost:3000/blog/${id}`)
-            const blog = response.data
-            setData({
-                title: blog.title,
-                subtitle: blog.subtitle,
-                description: blog.description,
-                image: blog.image,
-            })
-            setImagePreview(`http://localhost:3000/storage/${blog.image}`)
+            try {
+                const response = await axios.get(`http://localhost:3000/blog/${id}`)
+                const blog = response.data.data || response.data
+                setData({
+                    title: blog.title,
+                    subtitle: blog.subtitle,
+                    description: blog.description,
+                    image: blog.image,
+                })
+                if (blog.image) setImagePreview(blog.image.startsWith("http") ? blog.image : `http://localhost:3000/storage/${blog.image}`)
+            } catch (err) {
+                console.error("Error fetching blog:", err)
+            }
         }
         fetchBlog()
     }, [id])
@@ -33,32 +37,12 @@ function EditBlog() {
     const handleChange = (e) => {
         const { name, value, files } = e.target
         if (name === "image") {
-            setData({
-                ...data,
-                [name]: files[0]
-            })
+            setData({ ...data, image: files[0] })
             setImagePreview(URL.createObjectURL(files[0]))
         } else {
-            setData({
-                ...data,
-                [name]: value
-            })
+            setData({ ...data, [name]: value })
         }
     }
-    const fetchSingleBlog = async () => {
-        const response = await axios.get("http://localhost:3000/blog/" + id)
-        // console.log(response.data.data)
-        // setData(response.data.data)
-        setData({
-            title: response.data.data.title,
-            subtitle: response.data.data.subtitle,
-            description: response.data.data.description,
-            image: response.data.data.image
-        })
-    }
-    useEffect(() => {
-        fetchSingleBlog()
-    }, [])
 
     const editBlog = async (e) => {
         e.preventDefault()
@@ -70,42 +54,98 @@ function EditBlog() {
             formData.append("image", data.image)
         }
 
-        const response = await axios.patch(`http://localhost:3000/blog/${id}`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
+        try {
+            const response = await axios.patch(`http://localhost:3000/blog/${id}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            if (response.status === 200) {
+                alert("Blog updated successfully!")
+                navigate("/")
             }
-        })
-
-        if (response.status === 200) {
-            alert("Blog updated successfully")
-            navigate("/")
+        } catch (error) {
+            alert("Something went wrong while updating.")
+            console.error("Error updating blog:", error)
         }
     }
 
     return (
         <>
             <Navbar />
-            <form onSubmit={editBlog}>
-                <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">
-                    <div className="mt-3 text-center text-4xl font-bold">Edit Blog</div>
-                    <div className="p-8">
-                        <div className="flex gap-4">
-                            <input type="text" name="title" className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm" value={data.title} onChange={handleChange} placeholder="Title *" />
-                            <input type="text" name="subtitle" className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm" value={data.subtitle} onChange={handleChange} placeholder="Subtitle *" />
-                        </div>
-                        <div>
-                            <input type="file" name="image" className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm" onChange={handleChange} />
-                            {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview mt-4" />}
-                        </div>
-                        <div className="">
-                            <textarea name="description" id="text" cols="30" rows="10" className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-300" value={data.description} onChange={handleChange}>Descriptions</textarea>
-                        </div>
-                        <div className="text-center">
-                            <button className="cursor-pointer rounded-lg bg-blue-700 px-8 py-5 text-sm font-semibold text-white">Update Blog</button>
-                        </div>
+            <div className="min-h-screen bg-gray-50 dark:bg-[#0b1120] py-10 px-4 sm:px-6 lg:px-8 flex justify-center">
+                <form
+                    onSubmit={editBlog}
+                    className="w-full max-w-3xl bg-white dark:bg-gray-900 shadow-lg rounded-2xl p-6 sm:p-10 border border-gray-200 dark:border-gray-700"
+                >
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight text-center">
+                        Edit Blog
+                    </h2>
+
+                    {/* Title & Subtitle */}
+                    <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                        <input
+                            type="text"
+                            name="title"
+                            value={data.title}
+                            onChange={handleChange}
+                            placeholder="Title *"
+                            className="w-full sm:w-1/2 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-3 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+                        <input
+                            type="text"
+                            name="subtitle"
+                            value={data.subtitle}
+                            onChange={handleChange}
+                            placeholder="Subtitle *"
+                            className="w-full sm:w-1/2 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-3 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
                     </div>
-                </div>
-            </form>
+
+                    {/* Image Upload */}
+                    <div className="mb-6">
+                        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
+                            Upload Image
+                        </label>
+                        <input
+                            type="file"
+                            name="image"
+                            onChange={handleChange}
+                            className="block w-full text-sm text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 focus:outline-none"
+                        />
+                        {imagePreview && (
+                            <img
+                                src={imagePreview}
+                                alt="Preview"
+                                className="mt-4 w-full h-60 object-cover rounded-lg shadow-md border border-gray-300 dark:border-gray-700"
+                            />
+                        )}
+                    </div>
+
+                    {/* Description */}
+                    <div className="mb-8">
+                        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
+                            Description
+                        </label>
+                        <textarea
+                            name="description"
+                            value={data.description}
+                            onChange={handleChange}
+                            rows="6"
+                            placeholder="Write your blog description here..."
+                            className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="text-center">
+                        <button
+                            type="submit"
+                            className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white font-semibold py-3 px-10 rounded-xl shadow-md hover:shadow-lg transition duration-300"
+                        >
+                            Update Blog
+                        </button>
+                    </div>
+                </form>
+            </div>
         </>
     )
 }

@@ -1,87 +1,141 @@
-import Footer from "../components/Footer";
+import { motion } from "framer-motion";
+import { Code, PenTool, Video, Smartphone, Cpu, Globe } from "lucide-react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Services() {
+    const services = [
+        {
+            title: "Web Development",
+            color: "from-indigo-500 to-purple-500",
+            icon: <Globe size={28} />,
+            desc: "We build responsive, high-performance websites using modern frameworks like React, Next.js, and Node.js.",
+        },
+        {
+            title: "Graphics Designing",
+            color: "from-pink-500 to-rose-500",
+            icon: <PenTool size={28} />,
+            desc: "Creative and professional graphic designs that make your brand stand out — logos, posters, and more.",
+        },
+        {
+            title: "Video Editing",
+            color: "from-blue-500 to-cyan-500",
+            icon: <Video size={28} />,
+            desc: "Professional video editing and motion graphics that tell your story with clarity and style.",
+        },
+        {
+            title: "App Development",
+            color: "from-green-500 to-emerald-500",
+            icon: <Smartphone size={28} />,
+            desc: "Cross-platform mobile apps built with the latest technologies for performance and scalability.",
+        },
+        {
+            title: "AI & Automation",
+            color: "from-yellow-500 to-orange-500",
+            icon: <Cpu size={28} />,
+            desc: "Integrate AI solutions and automation to make your business smarter and more efficient.",
+        },
+        {
+            title: "Custom Coding / Bots",
+            color: "from-teal-500 to-green-400",
+            icon: <Code size={28} />,
+            desc: "We create custom scripts and bots to automate tasks, scrape data, and improve productivity.",
+        },
+    ];
+
     return (
         <>
             <Navbar />
-            <div className="container relative flex flex-col justify-between h-full max-w-6xl px-10 mx-auto xl:px-0 mt-5">
-                <h2 className="mb-1 text-3xl font-extrabold leading-tight text-gray-900">Services</h2>
-                <p className="mb-12 text-lg text-gray-500">Here is a few of the awesome Services we provide.</p>
-                <div className="w-full">
-                    <div className="flex flex-col w-full mb-10 sm:flex-row">
-                        <div className="w-full mb-10 sm:mb-0 sm:w-1/2">
-                            <div className="relative h-full ml-0 mr-0 sm:mr-10">
-                                <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg"></span>
-                                <div className="relative h-full p-5 bg-white border-2 border-indigo-500 rounded-lg">
-                                    <div className="flex items-center -mt-1">
-                                        <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">DAPP Development</h3>
+
+            {/* ✅ HERO SECTION */}
+            <section
+                className="relative flex items-center justify-center h-[100vh] w-full bg-cover bg-center"
+                style={{
+                    backgroundImage:
+                        "url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1950&q=80')",
+                }}
+            >
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/70"></div>
+
+                {/* Hero Text */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="relative z-10 text-center text-white px-6 sm:px-8"
+                >
+                    <motion.h2
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.8 }}
+                        className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight text-center"
+                    >
+                        Our Services
+                    </motion.h2>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.6, duration: 1 }}
+                        className="text-base sm:text-lg md:text-2xl max-w-2xl mx-auto text-gray-200 leading-relaxed"
+                    >
+                        From web development to AI-powered automation — we provide
+                        cutting-edge solutions to bring your ideas to life.
+                    </motion.p>
+                </motion.div>
+            </section>
+
+            {/* ✅ SERVICES SECTION */}
+            <section className="py-20 bg-gray-50">
+                <div className="max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto text-center">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight text-center"
+                    >
+                        What We Offer
+                    </motion.h2>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.3, duration: 1 }}
+                        className="text-gray-600 mb-12 text-base sm:text-lg max-w-2xl mx-auto"
+                    >
+                        Explore our wide range of professional services crafted for
+                        businesses and individuals in the tech era.
+                    </motion.p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+                        {services.map((service, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.1 }}
+                                className={`rounded-2xl overflow-hidden shadow-md bg-white hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300`}
+                            >
+                                <div className={`h-2 bg-gradient-to-r ${service.color}`}></div>
+                                <div className="p-6 sm:p-8">
+                                    <div className="flex justify-center text-indigo-600 mb-4">
+                                        {service.icon}
                                     </div>
-                                    <p className="mt-3 mb-1 text-xs font-medium text-indigo-500 uppercase">------------</p>
-                                    <p className="mb-2 text-gray-600">A decentralized application (dapp) is an application built on a
-                                        decentralized network that combines a smart contract and a frontend user interface.</p>
+                                    <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
+                                        {service.title}
+                                    </h3>
+                                    <p className="text-gray-600 text-sm sm:text-base">
+                                        {service.desc}
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="w-full sm:w-1/2">
-                            <div className="relative h-full ml-0 md:mr-10">
-                                <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-purple-500 rounded-lg"></span>
-                                <div className="relative h-full p-5 bg-white border-2 border-purple-500 rounded-lg">
-                                    <div className="flex items-center -mt-1">
-                                        <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">Web 3.0 Development</h3>
-                                    </div>
-                                    <p className="mt-3 mb-1 text-xs font-medium text-purple-500 uppercase">------------</p>
-                                    <p className="mb-2 text-gray-600">Web 3.0 is the third generation of Internet services that will
-                                        focus on understanding and analyzing data to provide a semantic web.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col w-full mb-5 sm:flex-row">
-                        <div className="w-full mb-10 sm:mb-0 sm:w-1/2">
-                            <div className="relative h-full ml-0 mr-0 sm:mr-10">
-                                <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-blue-400 rounded-lg"></span>
-                                <div className="relative h-full p-5 bg-white border-2 border-blue-400 rounded-lg">
-                                    <div className="flex items-center -mt-1">
-                                        <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">Project Audit</h3>
-                                    </div>
-                                    <p className="mt-3 mb-1 text-xs font-medium text-blue-400 uppercase">------------</p>
-                                    <p className="mb-2 text-gray-600">A Project Audit is a formal review of a project, which is intended
-                                        to assess the extent up to which project management standards are being upheld.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full mb-10 sm:mb-0 sm:w-1/2">
-                            <div className="relative h-full ml-0 mr-0 sm:mr-10">
-                                <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-yellow-400 rounded-lg"></span>
-                                <div className="relative h-full p-5 bg-white border-2 border-yellow-400 rounded-lg">
-                                    <div className="flex items-center -mt-1">
-                                        <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">Hacking / RE</h3>
-                                    </div>
-                                    <p className="mt-3 mb-1 text-xs font-medium text-yellow-400 uppercase">------------</p>
-                                    <p className="mb-2 text-gray-600">A security hacker is someone who explores methods for breaching
-                                        defenses and exploiting weaknesses in a computer system or network.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full sm:w-1/2">
-                            <div className="relative h-full ml-0 md:mr-10">
-                                <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-500 rounded-lg"></span>
-                                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
-                                    <div className="flex items-center -mt-1">
-                                        <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">Bot/Script Development</h3>
-                                    </div>
-                                    <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">------------</p>
-                                    <p className="mb-2 text-gray-600">Bot development frameworks were created as advanced software tools
-                                        that eliminate a large amount of manual work and accelerate the development process.</p>
-                                </div>
-                            </div>
-                        </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
-            </div>
+            </section>
+
             <Footer />
         </>
-    )
-
+    );
 }
