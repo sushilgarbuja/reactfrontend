@@ -18,7 +18,7 @@ function EditBlog() {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/blog/${id}`)
+                const response = await axios.get(`https://mern3-node-ypez.onrender.com/blog/${id}`)
                 const blog = response.data.data || response.data
                 setData({
                     title: blog.title,
@@ -26,7 +26,7 @@ function EditBlog() {
                     description: blog.description,
                     image: blog.image,
                 })
-                if (blog.image) setImagePreview(blog.image.startsWith("http") ? blog.image : `http://localhost:3000/storage/${blog.image}`)
+                if (blog.image) setImagePreview(blog.image.startsWith("http") ? blog.image : `https://mern3-node-ypez.onrender.com/storage/${blog.image}`)
             } catch (err) {
                 console.error("Error fetching blog:", err)
             }
@@ -55,7 +55,7 @@ function EditBlog() {
         }
 
         try {
-            const response = await axios.patch(`http://localhost:3000/blog/${id}`, formData, {
+            const response = await axios.patch(`https://mern3-node-ypez.onrender.com/blog/${id}`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
             if (response.status === 200) {

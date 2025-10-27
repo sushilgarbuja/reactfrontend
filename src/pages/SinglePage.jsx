@@ -12,7 +12,7 @@ function SinglePage() {
 
     const fetchSingleBlog = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/blog/${id}`)
+            const response = await axios.get(`https://mern3-node-ypez.onrender.com/blog/${id}`)
             setBlog(response.data.data)
         } catch (error) {
             console.error("Error fetching blog:", error)
@@ -26,7 +26,7 @@ function SinglePage() {
 
     const deleteBlog = async () => {
         try {
-            const response = await axios.delete(`http://localhost:3000/blog/${id}`)
+            const response = await axios.delete(`https://mern3-node-ypez.onrender.com/blog/${id}`)
             if (response.status === 200) {
                 alert("Blog deleted successfully")
                 navigate("/")

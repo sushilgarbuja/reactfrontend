@@ -28,7 +28,7 @@ function CreateBlog() {
         Object.keys(data).forEach((key) => formData.append(key, data[key]));
 
         try {
-            const response = await axios.post("http://localhost:3000/blog", formData, {
+            const response = await axios.post("https://mern3-node-ypez.onrender.com/blog", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             if (response.status === 200) {
